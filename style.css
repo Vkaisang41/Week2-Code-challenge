@@ -3,10 +3,11 @@ body {
   padding: 20px;
 }
 
-li {
-  margin: 10px 0;
+form {
+  margin-bottom: 20px;
 }
 
-button {
-  margin-left: 10px;
+li {
+  margin: 8px 0;
 }
+

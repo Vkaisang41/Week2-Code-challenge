@@ -1,59 +1,56 @@
-// src/guestManager.js
+const form = document.getElementById("guest-form");
+const input = document.getElementById("guest-name");
+const list = document.getElementById("guest-list");
 
 let guests = [];
 
-function addGuest(name, listElement) {
-  name = name.trim();
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const name = input.value.trim();
 
   if (name === "") {
-    return { success: false, error: "empty" };
+    alert("Please enter a name.");
+    return;
   }
 
   if (guests.length >= 10) {
-    return { success: false, error: "full" };
+    alert("Guest list is full (max 10).");
+    return;
   }
 
   if (guests.includes(name)) {
-    return { success: false, error: "duplicate" };
+    alert("Guest already added.");
+    return;
   }
 
   guests.push(name);
 
-  const li = document.createElement('li');
-  li.textContent = name + " (Attending)";
+  const li = document.createElement("li");
 
-  const toggleBtn = document.createElement('button');
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = name + " (Attending)";
+  li.appendChild(nameSpan);
+
+  const toggleBtn = document.createElement("button");
   toggleBtn.textContent = "Toggle RSVP";
-  toggleBtn.addEventListener('click', () => {
-    if (li.textContent.includes("Attending")) {
-      li.textContent = name + " (Not Attending)";
+  toggleBtn.addEventListener("click", function () {
+    if (nameSpan.textContent.includes("Attending")) {
+      nameSpan.textContent = name + " (Not Attending)";
     } else {
-      li.textContent = name + " (Attending)";
+      nameSpan.textContent = name + " (Attending)";
     }
-    li.appendChild(toggleBtn);
-    li.appendChild(removeBtn);
   });
 
-  const removeBtn = document.createElement('button');
+  const removeBtn = document.createElement("button");
   removeBtn.textContent = "Remove";
-  removeBtn.addEventListener('click', () => {
-    listElement.removeChild(li);
+  removeBtn.addEventListener("click", function () {
+    list.removeChild(li);
     guests = guests.filter(g => g !== name);
   });
 
   li.appendChild(toggleBtn);
   li.appendChild(removeBtn);
-  listElement.appendChild(li);
+  list.appendChild(li);
 
-  return { success: true };
-}
-
-function resetGuests() {
-  guests = [];
-}
-
-function getGuests() {
-  return [...guests];
-}
-
-module.exports = { addGuest, resetGuests, getGuests };
+  input.value = "";
+});
