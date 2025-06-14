@@ -15,3 +15,4 @@ A simple web app to manage a guest list with RSVP toggle and removal functionali
    ```bash
    git clone <repo-url>
    cd guest-list-manager
+
